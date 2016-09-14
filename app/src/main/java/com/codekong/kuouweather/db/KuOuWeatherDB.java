@@ -104,7 +104,7 @@ public class KuOuWeatherDB {
      */
     public List<City> loadCities(int provinceId){
         List<City> list = new ArrayList<>();
-        Cursor cursor = db.query("City", null, "proince_id = ?", new String[]{String.valueOf(provinceId)}, null, null, null);
+        Cursor cursor = db.query("City", null, "province_id = ?", new String[]{String.valueOf(provinceId)}, null, null, null);
         if (cursor.moveToFirst()){
             do {
                 City city = new City();
@@ -129,7 +129,7 @@ public class KuOuWeatherDB {
     public void saveCounty(County county){
         if (county != null){
             ContentValues values = new ContentValues();
-            values.put("county_name", county.getCountyCode());
+            values.put("county_name", county.getCountyName());
             values.put("county_code", county.getCountyCode());
             values.put("city_id", county.getCityId());
             db.insert("County", null, values);
