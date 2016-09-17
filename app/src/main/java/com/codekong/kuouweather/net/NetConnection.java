@@ -14,7 +14,7 @@ import java.net.ProtocolException;
 import java.net.URL;
 
 public class NetConnection {
-    public NetConnection(final String url, final HttpMethod method, final HttpCallBackListener listener, final String... kvs) {
+    public NetConnection(final String url, final HttpMethod method, final HttpCallBackListener listener, final String[] header, final String... kvs) {
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... params) {
@@ -33,6 +33,9 @@ public class NetConnection {
                             connection.setReadTimeout(8000);
                             connection.setRequestMethod("POST");
                             connection.setUseCaches(false);
+                            if (header != null){
+                                connection.setRequestProperty(header[0], header[1]);
+                            }
                             connection.setRequestProperty("Accept-Charset", "UTF-8");
                             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
                             connection.setDoInput(true);
@@ -60,6 +63,9 @@ public class NetConnection {
                             connection.setReadTimeout(8000);
                             connection.setDoInput(true);
                             connection.setUseCaches(false);
+                            if (header != null){
+                                connection.setRequestProperty(header[0], header[1]);
+                            }
                             connection.setRequestProperty("Accept-Charset", "UTF-8");
                             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
                             responseCode = connection.getResponseCode();

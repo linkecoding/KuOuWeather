@@ -1,7 +1,10 @@
 package com.codekong.kuouweather.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -77,6 +80,13 @@ public class ChooseAreaActivity extends AppCompatActivity implements AdapterView
      * 初始化事件
      */
     private void initEvent() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if (prefs.getBoolean("city_selected", false)){
+            Intent intent = new Intent(ChooseAreaActivity.this, WeatherActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
         areaListView.setAdapter(adapter);
         kuOuWeatherDB = KuOuWeatherDB.getInstance(this);
         areaListView.setOnItemClickListener(this);
@@ -202,7 +212,7 @@ public class ChooseAreaActivity extends AppCompatActivity implements AdapterView
                     }
                 });
             }
-        }, new String[]{});
+        }, null, new String[]{});
     }
 
     /**
@@ -256,6 +266,14 @@ public class ChooseAreaActivity extends AppCompatActivity implements AdapterView
         }else if (currentLevel == LEVEL_CITY){
             selectedCity = cityList.get(position);
             queryCounties();
+        }else if (currentLevel == LEVEL_COUNTY){
+            String countyCode = countyList.get(position).getCountyCode();
+            String countyName = countyList.get(position).getCountyName();
+            Intent intent = new Intent(ChooseAreaActivity.this, WeatherActivity.class);
+            intent.putExtra("county_code", countyCode);
+            intent.putExtra("county_name", countyName);
+            startActivity(intent);
+            finish();
         }
     }
 }

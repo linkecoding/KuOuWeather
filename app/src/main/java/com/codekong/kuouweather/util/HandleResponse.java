@@ -17,11 +17,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by 尚振鸿 on 2016-09-14.
@@ -122,7 +119,7 @@ public class HandleResponse {
                     String cityName = retData.getString("city");
                     JSONObject today = retData.getJSONObject("today");
                     String curTemp = today.getString("curTemp");
-                    String pmValue = today.getString("aqi");
+                    String fengli = today.getString("fengli");
                     String hightemp = today.getString("hightemp");
                     String lowtemp = today.getString("lowtemp");
                     String type = today.getString("type");
@@ -133,7 +130,7 @@ public class HandleResponse {
                         indexs[i] = index.getJSONObject(i).getString("details");
                     }
 
-                    TodayWeatherInfo todayWeatherInfo = new TodayWeatherInfo(cityName, curTemp, pmValue, type, hightemp, lowtemp, indexs);
+                    TodayWeatherInfo todayWeatherInfo = new TodayWeatherInfo(cityName, curTemp, fengli, type, hightemp, lowtemp, indexs);
 
                     JSONArray forecast = retData.getJSONArray("forecast");
                     List<ForecasteWeatherInfo> forecasteWeatherInfoList = new ArrayList<>();
@@ -167,12 +164,11 @@ public class HandleResponse {
      * @param forecasteWeatherInfoList  未来的天气信息
      */
     public static void saveWeatherInfo(Context context, TodayWeatherInfo todayWeatherInfo, List<ForecasteWeatherInfo> forecasteWeatherInfoList){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年M月d日", Locale.CHINA);
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putBoolean("city_selected", true);
         editor.putString("city_name", todayWeatherInfo.getCityName());
         editor.putString("cur_temp", todayWeatherInfo.getCurTemp());
-        editor.putString("pm_value", todayWeatherInfo.getPmValue());
+        editor.putString("fengli", todayWeatherInfo.getFengli());
         editor.putString("type", todayWeatherInfo.getType());
         editor.putString("high_temp", todayWeatherInfo.getHightemp());
         editor.putString("low_temp", todayWeatherInfo.getLowtemp());
@@ -182,7 +178,6 @@ public class HandleResponse {
         editor.putString("yd_index", todayWeatherInfo.getYdIndex());
         editor.putString("xc_index", todayWeatherInfo.getXcIndex());
         editor.putString("ls_index", todayWeatherInfo.getLsIndex());
-        editor.putString("current_data", simpleDateFormat.format(new Date()));
         //存储未来4天的天气信息
         for (int i = 0; i < forecasteWeatherInfoList.size(); i++) {
             ForecasteWeatherInfo forecastWeatherInfo = forecasteWeatherInfoList.get(i);

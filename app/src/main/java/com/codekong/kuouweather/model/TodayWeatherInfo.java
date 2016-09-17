@@ -9,8 +9,8 @@ public class TodayWeatherInfo {
     private String cityName;
     //当前温度
     private String curTemp;
-    //PM值
-    private String pmValue;
+    //风力大小
+    private String fengli;
     //天气类型
     private String type;
     //最高温度
@@ -30,10 +30,10 @@ public class TodayWeatherInfo {
     //晾晒指数
     private String lsIndex;
 
-    public TodayWeatherInfo(String cityName, String curTemp, String pmValue, String type, String hightemp, String lowtemp, String[] indexs) {
+    public TodayWeatherInfo(String cityName, String curTemp, String fengli, String type, String hightemp, String lowtemp, String[] indexs) {
         this.cityName = cityName;
         this.curTemp = curTemp;
-        this.pmValue = pmValue;
+        this.fengli = fengli;
         this.type = type;
         this.hightemp = hightemp;
         this.lowtemp = lowtemp;
@@ -53,8 +53,8 @@ public class TodayWeatherInfo {
         return curTemp;
     }
 
-    public String getPmValue() {
-        return pmValue;
+    public String getFengli() {
+        return fengli;
     }
 
     public String getType() {
