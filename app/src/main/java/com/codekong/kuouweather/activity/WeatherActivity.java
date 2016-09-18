@@ -1,13 +1,18 @@
 package com.codekong.kuouweather.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.codekong.kuouweather.R;
@@ -16,7 +21,12 @@ import com.codekong.kuouweather.net.HttpMethod;
 import com.codekong.kuouweather.net.NetConnection;
 import com.codekong.kuouweather.util.HandleResponse;
 
-public class WeatherActivity extends AppCompatActivity {
+public class WeatherActivity extends AppCompatActivity implements View.OnClickListener {
+    //向下弹出菜单
+    private View popupMenuView;
+    private PopupWindow popupMenu;
+    //右上角菜单控件
+    private ImageView menuImageView;
     private Context context;
     //同步中文字显示
     private TextView syncTextTv;
@@ -37,7 +47,11 @@ public class WeatherActivity extends AppCompatActivity {
     private ImageView[] futureWeatherTypeImgs;
     //存储这4类TextView(天气日期(星期)、天气类型、天气风力、最低温最高温)
     private TextView[] futureWeeks, futureWeatherTypes, futureFengLis, futureLowHighTemps;
+    //6类生活显示
+    private TextView gmIndex, fsIndex, ctIndex, ydIndex, xcIndex, lsIndex;
 
+    //popupMenu菜单item
+    private TextView changeCityTv, shareWeatherTv, settingTv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +65,12 @@ public class WeatherActivity extends AppCompatActivity {
      * 初始化获取布局控件
      */
     private void initView() {
+        //弹出菜单View
+        popupMenuView = getLayoutInflater().inflate(R.layout.popup_menu_layout, null);
+
+        menuImageView = (ImageView) findViewById(R.id.menu_image);
+        menuImageView.setOnClickListener(this);
+
         syncTextTv = (TextView) findViewById(R.id.sync_text);
         curTempTv = (TextView) findViewById(R.id.cur_temp);
         cityNameTv = (TextView) findViewById(R.id.city_name);
@@ -88,6 +108,13 @@ public class WeatherActivity extends AppCompatActivity {
         futureLowHighTemps[1] = (TextView) findViewById(R.id.future_low_high_temp2);
         futureLowHighTemps[2] = (TextView) findViewById(R.id.future_low_high_temp3);
         futureLowHighTemps[3] = (TextView) findViewById(R.id.future_low_high_temp4);
+
+        gmIndex = (TextView) findViewById(R.id.gm_index);
+        fsIndex = (TextView) findViewById(R.id.fs_index);
+        ctIndex = (TextView) findViewById(R.id.ct_index);
+        ydIndex = (TextView) findViewById(R.id.yd_index);
+        xcIndex = (TextView) findViewById(R.id.xc_index);
+        lsIndex = (TextView) findViewById(R.id.ls_index);
     }
 
     /**
@@ -202,5 +229,75 @@ public class WeatherActivity extends AppCompatActivity {
             futureFengLis[i].setText(prefs.getString("forecast_fengli" + (i+1), null));
             futureLowHighTemps[i].setText(prefs.getString("forecast_lowtemp" + (i+1), null) + " / " + prefs.getString("forecast_hightemp" + (i+1), null));
         }
+
+        gmIndex.setText(prefs.getString("gm_index", null));
+        fsIndex.setText(prefs.getString("fs_index", null));
+        ctIndex.setText(prefs.getString("ct_index", null));
+        ydIndex.setText(prefs.getString("yd_index", null));
+        xcIndex.setText(prefs.getString("xc_index", null));
+        lsIndex.setText(prefs.getString("ls_index", null ));
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.menu_image:
+                showMenu(v);
+                break;
+            case R.id.close_menu:
+                if (popupMenu!= null && popupMenu.isShowing()){
+                    popupMenu.dismiss();
+                }
+                break;
+            case R.id.change_city:
+                changeCity();
+            default:
+                break;
+        }
+    }
+
+    /**
+     * 切换城市
+     */
+    private void changeCity() {
+        popupMenu.dismiss();
+        Intent intent = new Intent(WeatherActivity.this, ChooseAreaActivity.class);
+        intent.putExtra("from_weather_activity", true);
+        startActivity(intent);
+        finish();
+    }
+
+    /**
+     * 以下拉方式弹出菜单
+     */
+    private void showMenu(View v) {
+        popupMenu = new PopupWindow(popupMenuView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupMenu.setAnimationStyle(R.style.popupInOutAnimation);
+        popupMenu.setFocusable(true);
+        popupMenu.setOutsideTouchable(true);
+        ColorDrawable dw = new ColorDrawable(000000);
+        popupMenu.setBackgroundDrawable(dw);
+        popupMenu.showAtLocation(v, Gravity.TOP, 0, 60);
+
+        setPopupMenuClick();
+    }
+
+    /**
+     * 为弹出菜单设置item点击事件
+     */
+    private void setPopupMenuClick(){
+        ImageView closeMenu = (ImageView) popupMenuView.findViewById(R.id.close_menu);
+        closeMenu.setOnClickListener(this);
+        changeCityTv = (TextView) popupMenuView.findViewById(R.id.change_city);
+        changeCityTv.setOnClickListener(this);
+        shareWeatherTv = (TextView) popupMenuView.findViewById(R.id.share_weather);
+        shareWeatherTv.setOnClickListener(this);
+        settingTv = (TextView) popupMenuView.findViewById(R.id.setting);
+        settingTv.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

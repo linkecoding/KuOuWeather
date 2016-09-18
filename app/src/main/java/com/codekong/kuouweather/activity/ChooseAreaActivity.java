@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChooseAreaActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+    private boolean isFromWeatherActivity;
     public static final int LEVEL_PROVINCE = 0;
     public static final int LEVEL_CITY = 1;
     public static final int LEVEL_COUNTY = 2;
@@ -80,11 +81,13 @@ public class ChooseAreaActivity extends AppCompatActivity implements AdapterView
      * 初始化事件
      */
     private void initEvent() {
+        isFromWeatherActivity = getIntent().getBooleanExtra("from_weather_activity", false);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        if (prefs.getBoolean("city_selected", false)){
+        if (prefs.getBoolean("city_selected", false) && !isFromWeatherActivity){
             Intent intent = new Intent(ChooseAreaActivity.this, WeatherActivity.class);
             startActivity(intent);
             finish();
+            return;
         }
 
         areaListView.setAdapter(adapter);
@@ -247,6 +250,10 @@ public class ChooseAreaActivity extends AppCompatActivity implements AdapterView
         }else if (currentLevel == LEVEL_CITY){
             queryProvinces();
         }else{
+            if (isFromWeatherActivity){
+                Intent intent = new Intent(ChooseAreaActivity.this, WeatherActivity.class);
+                startActivity(intent);
+            }
             finish();
         }
     }

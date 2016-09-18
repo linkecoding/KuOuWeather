@@ -1,147 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/weather_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@color/colorPrimary">
-        <TextView
-            android:id="@+id/cur_temp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="20dp"
-            android:textColor="@color/colorWhite"
-            android:text="12℃"
-            android:textSize="40sp"/>
-        <ImageView
-            android:id="@+id/menu_image"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentRight="true"
-            android:layout_margin="10dp"
-            android:src="@drawable/ic_menu"/>
-        <TextView
-            android:id="@+id/sync_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@id/cur_temp"
-            android:layout_toRightOf="@id/cur_temp"
-            android:layout_margin="20dp"
-            android:textColor="@color/colorWhite"
-            android:visibility="invisible"
-            android:text="@string/syncing"/>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:showDividers="middle"
-            android:divider="@drawable/white_vertical_divider_line"
-            android:dividerPadding="3dp"
-            android:layout_marginLeft="30dp"
-            android:layout_below="@id/cur_temp"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/city_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorWhite"
-                android:layout_marginRight="6dp"
-                android:textSize="18sp"
-                android:text="常州"/>
-            <TextView
-                android:id="@+id/weather_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorWhite"
-                android:layout_marginLeft="6dp"
-                android:textSize="18sp"
-                android:text="大雨"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:showDividers="middle"
-            android:divider="@drawable/white_vertical_divider_line"
-            android:layout_marginBottom="8dp"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:textSize="16sp"
-                    android:textColor="@color/colorWhite"
-                    android:gravity="center"
-                    android:text="最低温度"/>
-                <TextView
-                    android:id="@+id/low_temp"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:textColor="@color/colorWhite"
-                    android:layout_marginTop="3dp"
-                    android:gravity="center"
-                    android:textSize="14sp"
-                    android:text="28℃"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="16sp"
-                    android:gravity="center"
-                    android:text="最高温度"/>
-                <TextView
-                    android:id="@+id/height_temp"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:textColor="@color/colorWhite"
-                    android:layout_marginTop="3dp"
-                    android:gravity="center"
-                    android:textSize="14sp"
-                    android:text="28℃"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="16sp"
-                    android:gravity="center"
-                    android:text="风力大小"/>
-                <TextView
-                    android:id="@+id/fenli"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:textColor="@color/colorWhite"
-                    android:layout_marginTop="3dp"
-                    android:gravity="center"
-                    android:textSize="14sp"
-                    android:text="微风"/>
-            </LinearLayout>
-        </LinearLayout>
-    </RelativeLayout>
-    <ScrollView
+    android:layout_height="match_parent"
+    android:scrollbars="none">
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/colorPrimary">
+            <TextView
+                android:id="@+id/cur_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/colorWhite"
+                android:text="12℃"
+                android:textSize="40sp"/>
+            <ImageView
+                android:id="@+id/menu_image"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_margin="18dp"
+                android:src="@drawable/ic_menu"/>
+            <TextView
+                android:id="@+id/sync_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/cur_temp"
+                android:layout_toRightOf="@id/cur_temp"
+                android:layout_margin="20dp"
+                android:textColor="@color/colorWhite"
+                android:visibility="invisible"
+                android:text="@string/syncing"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:showDividers="middle"
+                android:divider="@drawable/white_vertical_divider_line"
+                android:dividerPadding="3dp"
+                android:layout_marginLeft="30dp"
+                android:layout_below="@id/cur_temp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/city_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorWhite"
+                    android:layout_marginRight="6dp"
+                    android:textSize="18sp"
+                    android:text="常州"/>
+                <TextView
+                    android:id="@+id/weather_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorWhite"
+                    android:layout_marginLeft="6dp"
+                    android:textSize="18sp"
+                    android:text="大雨"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:showDividers="middle"
+                android:divider="@drawable/white_vertical_divider_line"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:textSize="16sp"
+                        android:textColor="@color/colorWhite"
+                        android:gravity="center"
+                        android:text="最低温度"/>
+                    <TextView
+                        android:id="@+id/low_temp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:textColor="@color/colorWhite"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center"
+                        android:textSize="14sp"
+                        android:text="28℃"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:text="最高温度"/>
+                    <TextView
+                        android:id="@+id/height_temp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:textColor="@color/colorWhite"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center"
+                        android:textSize="14sp"
+                        android:text="28℃"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:text="风力大小"/>
+                    <TextView
+                        android:id="@+id/fenli"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:textColor="@color/colorWhite"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center"
+                        android:textSize="14sp"
+                        android:text="微风"/>
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:showDividers="middle|end"
+            android:showDividers="beginning|middle|end"
             android:divider="@drawable/gray_horizontal_divider_line"
             android:orientation="vertical">
             <RelativeLayout
@@ -186,7 +188,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:textSize="13sp"
-                        android:text="优" />
+                        android:text="微风" />
                 </LinearLayout>
 
                 <TextView
@@ -241,7 +243,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:textSize="13sp"
-                        android:text="优" />
+                        android:text="微风" />
                 </LinearLayout>
 
                 <TextView
@@ -296,7 +298,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:textSize="13sp"
-                        android:text="优" />
+                        android:text="微风" />
                 </LinearLayout>
 
                 <TextView
@@ -351,7 +353,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:textSize="13sp"
-                        android:text="优" />
+                        android:text="微风" />
                 </LinearLayout>
 
                 <TextView
@@ -365,5 +367,154 @@
                     android:text="28℃ / 28℃"/>
             </RelativeLayout>
         </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:showDividers="middle|end"
+            android:divider="@drawable/gray_horizontal_divider_line"
+            android:orientation="vertical">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@color/colorLightGray"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:textStyle="bold"
+                android:text="@string/live_advice"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_ganmao"/>
+                <TextView
+                    android:id="@+id/gm_index"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="15dp"
+                    android:layout_gravity="center"
+                    android:textSize="12sp"
+                    android:paddingRight="5dp"
+                    android:text="各项气象条件适宜，发生感冒机率较低。但请避免长期处于空调房间中，以防感冒。"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_fangshai"/>
+                <TextView
+                    android:id="@+id/fs_index"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="15dp"
+                    android:layout_gravity="center"
+                    android:textSize="12sp"
+                    android:paddingRight="5dp"
+                    android:text="属中等强度紫外辐射天气，外出时应注意防护，建议涂擦SPF指数高于15，PA+的防晒护肤品。"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_chuanyi"/>
+                <TextView
+                    android:id="@+id/ct_index"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="15dp"
+                    android:layout_gravity="center"
+                    android:textSize="12sp"
+                    android:paddingRight="5dp"
+                    android:text="天气炎热，建议着短衫、短裙、短裤、薄型T恤衫等清凉夏季服装。"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_yundong"/>
+                <TextView
+                    android:id="@+id/yd_index"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="15dp"
+                    android:layout_gravity="center"
+                    android:textSize="12sp"
+                    android:paddingRight="5dp"
+                    android:text="有降水，推荐您在室内进行低强度运动；若坚持户外运动，须注意选择避雨防滑并携带雨具。"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_xiche"/>
+                <TextView
+                    android:id="@+id/xc_index"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="15dp"
+                    android:layout_gravity="center"
+                    android:textSize="12sp"
+                    android:paddingRight="5dp"
+                    android:text="不宜洗车，未来24小时内有雨，如果在此期间洗车，雨水和路上的泥水可能会再次弄脏您的爱车。"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_liangshai"/>
+                <TextView
+                    android:id="@+id/ls_index"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="15dp"
+                    android:layout_gravity="center"
+                    android:textSize="12sp"
+                    android:paddingRight="5dp"
+                    android:text="有降水，不适宜晾晒。若需要晾晒，请在室内准备出充足的空间。"/>
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:padding="5dp"
+                android:gravity="center"
+                android:text="冰鉴天气"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

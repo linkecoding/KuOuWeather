@@ -7,6 +7,7 @@
     <color name="colorTitlebg">#484E61</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorBlack">#000000</color>
-    <color name="colorLightGray">#a9b7b7</color>
+    <color name="colorGray">#a9b7b7</color>
+    <color name="colorLightGray">#55a9b7b7</color>
 
 </resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:showDividers="middle"
+    android:divider="@drawable/white_horizontal_divider_line"
+    android:background="@color/colorAccent">
+    <ImageView
+        android:id="@+id/close_menu"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center|right"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_close"/>
+    <TextView
+        android:id="@+id/change_city"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center|left"
+        android:paddingLeft="20dp"
+        android:textColor="@color/colorWhite"
+        android:textSize="11sp"
+        android:clickable="true"
+        android:text="@string/change_city"/>
+    <TextView
+        android:id="@+id/share_weather"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center|left"
+        android:textColor="@color/colorWhite"
+        android:paddingLeft="20dp"
+        android:textSize="11sp"
+        android:clickable="true"
+        android:text="@string/share_weather"/>
+    <TextView
+        android:id="@+id/setting"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center|left"
+        android:textColor="@color/colorWhite"
+        android:paddingLeft="20dp"
+        android:textSize="11sp"
+        android:clickable="true"
+        android:text="@string/setting"/>
+
+</LinearLayout>
