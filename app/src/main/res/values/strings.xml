@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">KuOuWeather</string>
+    <string name="app_name">冰鉴天气</string>
     <string name="str_china">中国</string>
     <string name="syncing">同步中……</string>
     <string name="sync_failed">同步失败</string>
@@ -7,5 +7,6 @@
     <string name="change_city">切换城市</string>
     <string name="share_weather">分享天气</string>
     <string name="setting">设置</string>
+    <string name="update_weather">更新天气</string>
 
 </resources>

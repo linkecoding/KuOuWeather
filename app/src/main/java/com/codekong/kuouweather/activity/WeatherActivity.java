@@ -19,6 +19,7 @@ import com.codekong.kuouweather.R;
 import com.codekong.kuouweather.net.HttpCallBackListener;
 import com.codekong.kuouweather.net.HttpMethod;
 import com.codekong.kuouweather.net.NetConnection;
+import com.codekong.kuouweather.service.AutoUpdateWeatherService;
 import com.codekong.kuouweather.util.HandleResponse;
 
 public class WeatherActivity extends AppCompatActivity implements View.OnClickListener {
@@ -27,6 +28,9 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
     private PopupWindow popupMenu;
     //右上角菜单控件
     private ImageView menuImageView;
+    //popupMenu菜单item
+    private TextView changeCityTv, updateWeather, shareWeatherTv, settingTv;
+
     private Context context;
     //同步中文字显示
     private TextView syncTextTv;
@@ -50,8 +54,6 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
     //6类生活显示
     private TextView gmIndex, fsIndex, ctIndex, ydIndex, xcIndex, lsIndex;
 
-    //popupMenu菜单item
-    private TextView changeCityTv, shareWeatherTv, settingTv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -155,7 +157,7 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         queryFromServer(address, "weatherCode", weatherCode, countyName);
     }
 
-    private void queryFromServer(String address, String type, String countyCode, final String countyName){
+    private void queryFromServer(String address, String type, final String countyCode, final String countyName){
         if ("countyCode".equals(type)){
             new NetConnection(address, HttpMethod.GET, new HttpCallBackListener() {
                 @Override
@@ -187,7 +189,7 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
             new NetConnection(url, HttpMethod.GET, new HttpCallBackListener() {
                 @Override
                 public void onFinish(String response) {
-                    HandleResponse.handleWeatherResponse(context, response);
+                    HandleResponse.handleWeatherResponse(context, countyCode, response);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -236,6 +238,9 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         ydIndex.setText(prefs.getString("yd_index", null));
         xcIndex.setText(prefs.getString("xc_index", null));
         lsIndex.setText(prefs.getString("ls_index", null ));
+
+        Intent intent = new Intent(this, AutoUpdateWeatherService.class);
+        startService(intent);
     }
 
     @Override
@@ -251,6 +256,17 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.change_city:
                 changeCity();
+                break;
+            case R.id.update_weather:
+                syncTextTv.setText(R.string.syncing);
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                String weatherCode = prefs.getString("weather_code", "");
+                String cityName = prefs.getString("city_name", "");
+                if (!TextUtils.isEmpty(weatherCode)){
+                    queryWeatherInfo(weatherCode, cityName);
+                }
+                popupMenu.dismiss();
+                break;
             default:
                 break;
         }
@@ -290,6 +306,8 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         closeMenu.setOnClickListener(this);
         changeCityTv = (TextView) popupMenuView.findViewById(R.id.change_city);
         changeCityTv.setOnClickListener(this);
+        updateWeather = (TextView) popupMenuView.findViewById(R.id.update_weather);
+        updateWeather.setOnClickListener(this);
         shareWeatherTv = (TextView) popupMenuView.findViewById(R.id.share_weather);
         shareWeatherTv.setOnClickListener(this);
         settingTv = (TextView) popupMenuView.findViewById(R.id.setting);

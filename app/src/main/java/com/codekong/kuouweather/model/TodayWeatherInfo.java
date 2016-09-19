@@ -7,6 +7,8 @@ package com.codekong.kuouweather.model;
 public class TodayWeatherInfo {
     //城市名称
     private String cityName;
+    //天气代号(countyCode)
+    private String weatherCode;
     //当前温度
     private String curTemp;
     //风力大小
@@ -30,8 +32,9 @@ public class TodayWeatherInfo {
     //晾晒指数
     private String lsIndex;
 
-    public TodayWeatherInfo(String cityName, String curTemp, String fengli, String type, String hightemp, String lowtemp, String[] indexs) {
+    public TodayWeatherInfo(String cityName, String weatherCode, String curTemp, String fengli, String type, String hightemp, String lowtemp, String[] indexs) {
         this.cityName = cityName;
+        this.weatherCode = weatherCode;
         this.curTemp = curTemp;
         this.fengli = fengli;
         this.type = type;
@@ -47,6 +50,10 @@ public class TodayWeatherInfo {
 
     public String getCityName() {
         return cityName;
+    }
+
+    public String getWeatherCode() {
+        return weatherCode;
     }
 
     public String getCurTemp() {

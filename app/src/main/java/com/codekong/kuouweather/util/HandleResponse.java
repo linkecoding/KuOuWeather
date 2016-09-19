@@ -105,11 +105,12 @@ public class HandleResponse {
     }
 
     /**
-     * 解析服务器返回的天气JSON数据,并将解析出来的数据存储到本地
+     *
      * @param context
+     * @param weatherCode
      * @param response
      */
-    public static void handleWeatherResponse(Context context, String response){
+    public static void handleWeatherResponse(Context context, String weatherCode, String response){
         if (response != null){
             try {
                 JSONObject jsonObject1 = new JSONObject(response);
@@ -130,7 +131,7 @@ public class HandleResponse {
                         indexs[i] = index.getJSONObject(i).getString("details");
                     }
 
-                    TodayWeatherInfo todayWeatherInfo = new TodayWeatherInfo(cityName, curTemp, fengli, type, hightemp, lowtemp, indexs);
+                    TodayWeatherInfo todayWeatherInfo = new TodayWeatherInfo(cityName, weatherCode, curTemp, fengli, type, hightemp, lowtemp, indexs);
 
                     JSONArray forecast = retData.getJSONArray("forecast");
                     List<ForecasteWeatherInfo> forecasteWeatherInfoList = new ArrayList<>();
@@ -167,6 +168,7 @@ public class HandleResponse {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putBoolean("city_selected", true);
         editor.putString("city_name", todayWeatherInfo.getCityName());
+        editor.putString("weather_code", todayWeatherInfo.getWeatherCode());
         editor.putString("cur_temp", todayWeatherInfo.getCurTemp());
         editor.putString("fengli", todayWeatherInfo.getFengli());
         editor.putString("type", todayWeatherInfo.getType());
