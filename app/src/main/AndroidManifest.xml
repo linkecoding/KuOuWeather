@@ -4,6 +4,12 @@
 
     <!-- 网络连接权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!--小米更新所需权限-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="com.xiaomi.market.sdk.UPDATE" />
 
     <application
         android:name=".application.KuOuApplication"
@@ -22,6 +28,13 @@
         <activity android:name=".activity.WeatherActivity"></activity>
         <service android:name=".service.AutoUpdateWeatherService"></service>
         <receiver android:name=".receiver.AutoUpdateWeatherReceiver"></receiver>
+
+        <!--小米更新-->
+        <receiver android:name="com.xiaomi.market.sdk.DownloadCompleteReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

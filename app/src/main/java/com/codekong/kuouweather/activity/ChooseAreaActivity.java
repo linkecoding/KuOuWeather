@@ -23,6 +23,8 @@ import com.codekong.kuouweather.net.HttpCallBackListener;
 import com.codekong.kuouweather.net.HttpMethod;
 import com.codekong.kuouweather.net.NetConnection;
 import com.codekong.kuouweather.util.HandleResponse;
+import com.xiaomi.market.sdk.XiaomiUpdateAgent;
+import com.xiaomi.mistatistic.sdk.MiStatInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +63,9 @@ public class ChooseAreaActivity extends AppCompatActivity implements AdapterView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.choose_area);
+        //小米更新,这种情况下, 若本地版本是debug版本则使用沙盒环境，否则使用线上环境
+        XiaomiUpdateAgent.update(this);
+
         initView();
         initEvent();
     }
@@ -282,5 +287,17 @@ public class ChooseAreaActivity extends AppCompatActivity implements AdapterView
             startActivity(intent);
             finish();
         }
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        MiStatInterface.recordPageStart(this, "选择地区界面");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MiStatInterface.recordPageEnd();
     }
 }

@@ -20,7 +20,13 @@ import com.codekong.kuouweather.net.HttpCallBackListener;
 import com.codekong.kuouweather.net.HttpMethod;
 import com.codekong.kuouweather.net.NetConnection;
 import com.codekong.kuouweather.service.AutoUpdateWeatherService;
+import com.codekong.kuouweather.util.ClassUtil;
 import com.codekong.kuouweather.util.HandleResponse;
+import com.xiaomi.market.sdk.XiaomiUpdateAgent;
+import com.xiaomi.mistatistic.sdk.MiStatInterface;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class WeatherActivity extends AppCompatActivity implements View.OnClickListener {
     //向下弹出菜单
@@ -58,6 +64,8 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.weather_layout);
+        //小米更新,这种情况下, 若本地版本是debug版本则使用沙盒环境，否则使用线上环境
+        XiaomiUpdateAgent.update(this);
         context = this;
         initView();
         initEvent();
@@ -217,6 +225,25 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
      * 从SharePreferences文件中读取存储的天气信息并设置到界面上
      */
     private void showWeather() {
+        Map<String, String> weatherImg = new HashMap<>();
+        weatherImg.put("晴", "01");
+        weatherImg.put("多云", "02");
+        weatherImg.put("阴", "03");
+        weatherImg.put("雾", "04");
+        weatherImg.put("大风", "05");
+        weatherImg.put("雷", "06");
+        weatherImg.put("风暴", "07");
+        weatherImg.put("沙尘暴", "08");
+        weatherImg.put("小雨", "09");
+        weatherImg.put("中雨", "10");
+        weatherImg.put("大雨", "11");
+        weatherImg.put("雷阵雨", "12");
+        weatherImg.put("阵雨", "13");
+        weatherImg.put("小雪", "14");
+        weatherImg.put("中雪", "15");
+        weatherImg.put("雨夹雪", "16");
+        weatherImg.put("阵雪", "17");
+
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         curTempTv.setText(prefs.getString("cur_temp", ""));
         cityNameTv.setText(prefs.getString("city_name", ""));
@@ -226,10 +253,16 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         fengliTv.setText(prefs.getString("fengli", "无"));
 
         for (int i = 0; i < futureWeeks.length; i++) {
+            String weatherType = prefs.getString("forecast_type" + (i+1), null);
             futureWeeks[i].setText(prefs.getString("forecast_week" + (i+1), null));
             futureWeatherTypes[i].setText(prefs.getString("forecast_type" + (i+1), null));
-            futureFengLis[i].setText(prefs.getString("forecast_fengli" + (i+1), null));
+            futureFengLis[i].setText(weatherType);
             futureLowHighTemps[i].setText(prefs.getString("forecast_lowtemp" + (i+1), null) + " / " + prefs.getString("forecast_hightemp" + (i+1), null));
+            if (weatherImg.containsKey(weatherType)){
+                futureWeatherTypeImgs[i].setImageResource(ClassUtil.getResId("ic_weather_" + weatherImg.get(weatherType), R.drawable.class));
+            }else{
+                futureWeatherTypeImgs[i].setImageResource(R.drawable.ic_weather_01);
+            }
         }
 
         gmIndex.setText(prefs.getString("gm_index", null));
@@ -312,6 +345,18 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         shareWeatherTv.setOnClickListener(this);
         settingTv = (TextView) popupMenuView.findViewById(R.id.setting);
         settingTv.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MiStatInterface.recordPageStart(this, "主界面");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MiStatInterface.recordPageEnd();
     }
 
     @Override
