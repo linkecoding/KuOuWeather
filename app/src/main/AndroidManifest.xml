@@ -25,9 +25,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.WeatherActivity"></activity>
-        <service android:name=".service.AutoUpdateWeatherService"></service>
-        <receiver android:name=".receiver.AutoUpdateWeatherReceiver"></receiver>
+        <activity android:name=".activity.WeatherActivity"/>
+        <service android:name=".service.AutoUpdateWeatherService"/>
+        <service android:name=".service.TimerService"/>
+        <receiver android:name=".receiver.AutoUpdateWeatherReceiver"/>
+        <receiver android:name=".widget.WidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widgetconfig"/>
+        </receiver>
 
         <!--小米更新-->
         <receiver android:name="com.xiaomi.market.sdk.DownloadCompleteReceiver" >
