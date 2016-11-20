@@ -23,7 +23,7 @@ public class KuOuApplication extends Application{
         final String APP_ID = "2882303761517511218";
         final String APP_KEY = "5141751151218";
         // regular stats.
-        MiStatInterface.initialize(this.getApplicationContext(), APP_ID, APP_KEY, "default channel");
+        MiStatInterface.initialize(this.getApplicationContext(), APP_ID, APP_KEY, "tencent_store");
 
         MiStatInterface.setUploadPolicy(MiStatInterface.UPLOAD_POLICY_WHILE_INITIALIZE, 0);
         MiStatInterface.enableLog();

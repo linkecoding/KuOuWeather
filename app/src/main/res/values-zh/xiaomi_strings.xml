@@ -10,4 +10,14 @@
     <string name="xiaomi_megabytes_unit"><xliff:g id="size">%1$s</xliff:g>MB</string>
     <string name="xiaomi_connect_download_manager_fail">连接下载管理器失败，请在应用管理中检查下载管理器的状态</string>
 
+    <!--自定义-->
+    <string name="app_name">冰鉴天气</string>
+    <string name="str_china">中国</string>
+    <string name="syncing">同步中……</string>
+    <string name="sync_failed">同步失败</string>
+    <string name="live_advice">生活建议</string>
+    <string name="change_city">切换城市</string>
+    <string name="share_weather">分享天气</string>
+    <string name="setting">设置</string>
+    <string name="update_weather">更新天气</string>
 </resources>
