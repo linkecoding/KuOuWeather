@@ -19,5 +19,6 @@
     <string name="share_weather">分享天气</string>
     <string name="setting">设置</string>
     <string name="update_weather">更新天气</string>
+    <string name="str_pull_down_to_refresh">下拉可以刷新</string>
 
 </resources>

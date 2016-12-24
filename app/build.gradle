@@ -25,4 +25,14 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.0'
     compile files('src/main/libs/xiaomi_sdk.jar')
     compile files('src/main/libs/MiStats_SDK_Client_1_8_0.jar')
+    compile files('src/main/libs/MobCommons-2016.1107.1809.jar')
+    compile files('src/main/libs/MobTools-2016.1107.1809.jar')
+    compile files('src/main/libs/ShareSDK-Core-2.7.10.jar')
+    compile files('src/main/libs/ShareSDK-QQ-2.7.10.jar')
+    compile files('src/main/libs/ShareSDK-QZone-2.7.10.jar')
+    compile files('src/main/libs/ShareSDK-SinaWeibo-2.7.10.jar')
+    compile files('src/main/libs/ShareSDK-Wechat-2.7.10.jar')
+    compile files('src/main/libs/ShareSDK-Wechat-Core-2.7.10.jar')
+    compile files('src/main/libs/ShareSDK-Wechat-Moments-2.7.10.jar')
+    compile 'com.jwenfeng.pulltorefresh:library:1.0.1'
 }

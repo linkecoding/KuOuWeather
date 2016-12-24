@@ -24,16 +24,6 @@
         android:clickable="true"
         android:text="@string/change_city"/>
     <TextView
-        android:id="@+id/update_weather"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:gravity="center|left"
-        android:textColor="@color/colorWhite"
-        android:paddingLeft="20dp"
-        android:textSize="11sp"
-        android:clickable="true"
-        android:text="@string/update_weather"/>
-    <TextView
         android:id="@+id/share_weather"
         android:layout_width="match_parent"
         android:layout_height="40dp"

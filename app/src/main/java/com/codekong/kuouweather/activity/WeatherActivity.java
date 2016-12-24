@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -16,19 +17,27 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.codekong.kuouweather.R;
+import com.codekong.kuouweather.config.AppConfig;
 import com.codekong.kuouweather.net.HttpCallBackListener;
 import com.codekong.kuouweather.net.HttpMethod;
 import com.codekong.kuouweather.net.NetConnection;
 import com.codekong.kuouweather.service.AutoUpdateWeatherService;
 import com.codekong.kuouweather.util.ClassUtil;
 import com.codekong.kuouweather.util.HandleResponse;
+import com.codekong.kuouweather.util.ShareUtil;
+import com.jwenfeng.library.pulltorefresh.BaseRefreshListener;
+import com.jwenfeng.library.pulltorefresh.PullToRefreshLayout;
 import com.xiaomi.market.sdk.XiaomiUpdateAgent;
 import com.xiaomi.mistatistic.sdk.MiStatInterface;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class WeatherActivity extends AppCompatActivity implements View.OnClickListener {
+import cn.sharesdk.framework.ShareSDK;
+
+public class WeatherActivity extends AppCompatActivity implements View.OnClickListener, BaseRefreshListener {
+    private PullToRefreshLayout pullToRefreshLayout;
+
     //向下弹出菜单
     private View popupMenuView;
     private PopupWindow popupMenu;
@@ -66,6 +75,8 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.weather_layout);
         //小米更新,这种情况下, 若本地版本是debug版本则使用沙盒环境，否则使用线上环境
         XiaomiUpdateAgent.update(this);
+        //社会化分享
+        ShareSDK.initSDK(this, AppConfig.SHARE_APP_KEY);
         context = this;
         initView();
         initEvent();
@@ -75,6 +86,9 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
      * 初始化获取布局控件
      */
     private void initView() {
+        pullToRefreshLayout = (PullToRefreshLayout) findViewById(R.id.weather_layout);
+        pullToRefreshLayout.setRefreshListener(this);
+
         //弹出菜单View
         popupMenuView = getLayoutInflater().inflate(R.layout.popup_menu_layout, null);
 
@@ -150,7 +164,7 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
      * @param countyCode
      */
     private void queryWeatherCode(String countyCode, String countyName){
-        String address = "http://www.weather.com.cn/data/list3/city" + countyCode + ".xml";
+        String address = AppConfig.WEATHER_CODE_OF_COUNTY_CODE_URL + countyCode + ".xml";
         queryFromServer(address, "countyCode", countyCode, countyName);
     }
 
@@ -161,7 +175,7 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
      * @param countyName
      */
     private void queryWeatherInfo(String weatherCode, String countyName){
-        String address = "http://apis.baidu.com/apistore/weatherservice/recentweathers";
+        String address = AppConfig.WEATHER_INFO_URL;
         queryFromServer(address, "weatherCode", weatherCode, countyName);
     }
 
@@ -191,8 +205,8 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
                 }
             }, null, new String[]{});
         }else  if ("weatherCode".equals(type)){
-            String url = "http://apis.baidu.com/apistore/weatherservice/recentweathers";
-            String[] header = new String[]{"apikey", "f04a61e1bf06e8761a06b5e31c64c16a"};
+            String url = AppConfig.WEATHER_INFO_URL;
+            String[] header = new String[]{"apikey", AppConfig.WEATHER_API_KEY};
             String[] params = new String[]{"cityid", countyCode, "cityname", countyName};
             new NetConnection(url, HttpMethod.GET, new HttpCallBackListener() {
                 @Override
@@ -290,18 +304,30 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.change_city:
                 changeCity();
                 break;
-            case R.id.update_weather:
-                syncTextTv.setText(R.string.syncing);
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                String weatherCode = prefs.getString("weather_code", "");
-                String cityName = prefs.getString("city_name", "");
-                if (!TextUtils.isEmpty(weatherCode)){
-                    queryWeatherInfo(weatherCode, cityName);
+            case R.id.share_weather:
+                if (popupMenu != null){
+                    popupMenu.dismiss();
                 }
-                popupMenu.dismiss();
+                ShareUtil.showShare(this);
                 break;
             default:
                 break;
+        }
+    }
+
+    /**
+     * 更新天气
+     */
+    private void updateWeather() {
+        syncTextTv.setText(R.string.syncing);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String weatherCode = prefs.getString("weather_code", "");
+        String cityName = prefs.getString("city_name", "");
+        if (!TextUtils.isEmpty(weatherCode)){
+            queryWeatherInfo(weatherCode, cityName);
+        }
+        if (popupMenu != null){
+            popupMenu.dismiss();
         }
     }
 
@@ -339,8 +365,6 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         closeMenu.setOnClickListener(this);
         changeCityTv = (TextView) popupMenuView.findViewById(R.id.change_city);
         changeCityTv.setOnClickListener(this);
-        updateWeather = (TextView) popupMenuView.findViewById(R.id.update_weather);
-        updateWeather.setOnClickListener(this);
         shareWeatherTv = (TextView) popupMenuView.findViewById(R.id.share_weather);
         shareWeatherTv.setOnClickListener(this);
         settingTv = (TextView) popupMenuView.findViewById(R.id.setting);
@@ -362,5 +386,21 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+
+    @Override
+    public void refresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                updateWeather();
+                pullToRefreshLayout.finishRefresh();
+            }
+        }, 1500);
+    }
+
+    @Override
+    public void loadMore() {
     }
 }
